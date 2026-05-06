@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
+import QuoteCard from './QuoteCard';
+import FetchButton from './FetchButton';
 
 const QUOTES = [
   {
@@ -60,11 +62,20 @@ function pickRandomQuote(current) {
 function App() {
   const [quote, setQuote] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [fetchCount, setFetchCount] = useState(0);
+
+  useEffect(() => {
+    document.title =
+      fetchCount === 0
+        ? '名言アプリ'
+        : `名言アプリ（${fetchCount}回取得済み）`;
+  }, [fetchCount]);
 
   useEffect(() => {
     setLoading(true);
     const timerId = setTimeout(() => {
       setQuote(pickRandomQuote(null));
+      setFetchCount((c) => c + 1);
       setLoading(false);
     }, 1000);
 
@@ -73,6 +84,7 @@ function App() {
 
   const handleNewQuote = () => {
     setQuote((prev) => pickRandomQuote(prev));
+    setFetchCount((c) => c + 1);
   };
 
   return (
@@ -80,23 +92,15 @@ function App() {
       <main className="quote-card">
         <h1 className="quote-heading">ランダム名言</h1>
 
+        <p className="quote-counter" aria-live="polite">
+          名言を取得した回数：<strong>{fetchCount}</strong>回
+        </p>
+
         {loading && <p className="quote-status">読み込み中...</p>}
 
-        {!loading && quote && (
-          <blockquote className="quote-block">
-            <p className="quote-text">&ldquo;{quote.content}&rdquo;</p>
-            <cite className="quote-author">— {quote.author}</cite>
-          </blockquote>
-        )}
+        {!loading && <QuoteCard quote={quote} />}
 
-        <button
-          type="button"
-          className="quote-button"
-          onClick={handleNewQuote}
-          disabled={loading}
-        >
-          新しい名言を取得
-        </button>
+        <FetchButton onClick={handleNewQuote} loading={loading} />
       </main>
     </div>
   );
