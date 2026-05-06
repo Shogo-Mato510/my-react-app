@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import '../App.css';
 import QuoteCard from '../QuoteCard';
 import FetchButton from '../FetchButton';
+import useFavoriteQuotes from '../hooks/useFavoriteQuotes';
 
 const QUOTES = [
   {
@@ -63,6 +64,7 @@ function Home() {
   const [quote, setQuote] = useState(null);
   const [loading, setLoading] = useState(true);
   const [fetchCount, setFetchCount] = useState(0);
+  const { isFavorite, add } = useFavoriteQuotes();
 
   useEffect(() => {
     document.title =
@@ -98,7 +100,18 @@ function Home() {
 
         {loading && <p className="quote-status">読み込み中...</p>}
 
-        {!loading && <QuoteCard quote={quote} />}
+        {!loading && (
+          <QuoteCard
+            quote={quote}
+            actionLabel={
+              quote && isFavorite(quote)
+                ? '★ お気に入り済み'
+                : '★ お気に入りに追加'
+            }
+            onAction={add}
+            actionDisabled={quote ? isFavorite(quote) : true}
+          />
+        )}
 
         <FetchButton onClick={handleNewQuote} loading={loading} />
       </main>

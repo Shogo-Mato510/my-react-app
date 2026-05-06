@@ -10,6 +10,9 @@ function Navbar() {
           <Link className="navbar-link" to="/">
             ホーム
           </Link>
+          <Link className="navbar-link" to="/favorites">
+            お気に入り
+          </Link>
           <Link className="navbar-link" to="/about">
             このアプリについて
           </Link>
