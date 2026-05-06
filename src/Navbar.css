@@ -31,12 +31,48 @@
   gap: 20px;
 }
 
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .navbar-link {
   font-size: 0.95rem;
   color: #475569;
   text-decoration: none;
 }
 
+.favorites-count-badge {
+  margin-left: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
 .navbar-link:hover {
   color: #4f46e5;
+}
+
+.theme-toggle-button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.theme-toggle-button:hover {
+  background: #f8fafc;
+}
+
+.theme-dark .favorites-count-badge {
+  background: #312e81;
+  color: #c7d2fe;
 }

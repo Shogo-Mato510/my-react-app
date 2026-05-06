@@ -207,3 +207,81 @@
   color: #64748b;
   line-height: 1.6;
 }
+
+.theme-dark .navbar {
+  background: rgba(15, 23, 42, 0.9);
+  border-bottom-color: #334155;
+}
+
+.theme-dark .navbar-brand {
+  color: #f8fafc;
+}
+
+.theme-dark .navbar-link {
+  color: #cbd5e1;
+}
+
+.theme-dark .navbar-link:hover {
+  color: #a5b4fc;
+}
+
+.theme-dark .theme-toggle-button {
+  background: #1e293b;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+.theme-dark .theme-toggle-button:hover {
+  background: #334155;
+}
+
+.theme-dark .App,
+.theme-dark .page-about {
+  background: linear-gradient(160deg, #0f172a 0%, #111827 55%, #0b1120 100%);
+  color: #e2e8f0;
+}
+
+.theme-dark .quote-card,
+.theme-dark .about-card {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 12px 40px rgba(2, 6, 23, 0.45);
+}
+
+.theme-dark .quote-heading,
+.theme-dark .about-heading {
+  color: #f8fafc;
+}
+
+.theme-dark .quote-counter,
+.theme-dark .quote-author,
+.theme-dark .quote-status,
+.theme-dark .about-footer {
+  color: #94a3b8;
+}
+
+.theme-dark .quote-counter strong,
+.theme-dark .about-list,
+.theme-dark .about-list li {
+  color: #cbd5e1;
+}
+
+.theme-dark .quote-text,
+.theme-dark .about-lead {
+  color: #e2e8f0;
+}
+
+.theme-dark .quote-sub-button {
+  color: #e2e8f0;
+  background: #334155;
+  border-color: #475569;
+}
+
+.theme-dark .quote-sub-button:hover:not(:disabled) {
+  background: #475569;
+}
+
+.theme-dark .favorites-list .quote-block {
+  border-color: #475569;
+  background: #0f172a;
+}

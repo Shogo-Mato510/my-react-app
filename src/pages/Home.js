@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import '../App.css';
 import QuoteCard from '../QuoteCard';
 import FetchButton from '../FetchButton';
-import useFavoriteQuotes from '../hooks/useFavoriteQuotes';
 
 const QUOTES = [
   {
@@ -60,11 +59,10 @@ function pickRandomQuote(current) {
   return next;
 }
 
-function Home() {
+function Home({ isFavorite, addFavorite }) {
   const [quote, setQuote] = useState(null);
   const [loading, setLoading] = useState(true);
   const [fetchCount, setFetchCount] = useState(0);
-  const { isFavorite, add } = useFavoriteQuotes();
 
   useEffect(() => {
     document.title =
@@ -108,7 +106,7 @@ function Home() {
                 ? '★ お気に入り済み'
                 : '★ お気に入りに追加'
             }
-            onAction={add}
+            onAction={addFavorite}
             actionDisabled={quote ? isFavorite(quote) : true}
           />
         )}
