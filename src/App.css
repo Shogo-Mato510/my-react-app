@@ -1,5 +1,9 @@
+.app-shell {
+  padding-top: 56px;
+}
+
 .App {
-  min-height: 100vh;
+  min-height: calc(100vh - 56px);
   margin: 0;
   display: flex;
   align-items: center;
@@ -97,4 +101,58 @@
 .quote-button:disabled {
   opacity: 0.65;
   cursor: not-allowed;
+}
+
+.page-about {
+  min-height: calc(100vh - 56px);
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px 16px 48px;
+  background: linear-gradient(160deg, #eef2ff 0%, #f8fafc 50%, #ecfdf5 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans',
+    'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+  color: #1e293b;
+}
+
+.about-card {
+  width: min(100%, 560px);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 28px 26px;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+}
+
+.about-heading {
+  margin: 0 0 16px;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.about-lead {
+  margin: 0 0 18px;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #334155;
+}
+
+.about-list {
+  margin: 0 0 18px;
+  padding-left: 1.25rem;
+  color: #475569;
+  line-height: 1.7;
+}
+
+.about-list li {
+  margin-bottom: 8px;
+}
+
+.about-footer {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.6;
 }

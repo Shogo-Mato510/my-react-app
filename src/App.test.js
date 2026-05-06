@@ -1,8 +1,15 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('shows home quote app after initial loading', async () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByText(/読み込み中/i)).toBeInTheDocument();
+  await waitFor(
+    () => {
+      expect(
+        screen.getByRole('heading', { name: /ランダム名言/i })
+      ).toBeInTheDocument();
+    },
+    { timeout: 2000 }
+  );
 });
