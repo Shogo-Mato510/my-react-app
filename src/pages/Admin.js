@@ -1,9 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
+import { clearAccessToken, getAccessToken } from '../authStorage';
 
 const API_BASE = 'http://127.0.0.1:8000';
 
+function authHeaders() {
+  const token = getAccessToken();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
 function Admin() {
+  const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [listError, setListError] = useState('');
@@ -36,8 +44,17 @@ function Admin() {
   }, []);
 
   useEffect(() => {
+    if (!getAccessToken()) {
+      navigate('/login', { replace: true });
+      return;
+    }
     loadItems();
-  }, [loadItems]);
+  }, [navigate, loadItems]);
+
+  const handleLogout = () => {
+    clearAccessToken();
+    navigate('/login', { replace: true });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -53,7 +70,10 @@ function Admin() {
     try {
       const response = await fetch(`${API_BASE}/items`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...authHeaders(),
+        },
         body: JSON.stringify({ content: trimmedContent, author: trimmedAuthor }),
       });
       if (!response.ok) {
@@ -74,6 +94,9 @@ function Admin() {
     try {
       const response = await fetch(`${API_BASE}/items/${id}`, {
         method: 'DELETE',
+        headers: {
+          ...authHeaders(),
+        },
       });
       if (!response.ok) {
         throw new Error('削除に失敗しました');
@@ -86,10 +109,25 @@ function Admin() {
     }
   };
 
+  if (!getAccessToken()) {
+    return (
+      <div className="page-admin">
+        <main className="admin-card">
+          <p className="admin-status">ログインページへ移動しています…</p>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="page-admin">
       <main className="admin-card">
-        <h1 className="admin-heading">名言の管理</h1>
+        <div className="admin-header-row">
+          <h1 className="admin-heading">名言の管理</h1>
+          <button type="button" className="admin-logout-button" onClick={handleLogout}>
+            ログアウト
+          </button>
+        </div>
         <p className="admin-lead">
           FastAPI の <code className="admin-code">/items</code> を操作して名言を追加・削除できます。
         </p>

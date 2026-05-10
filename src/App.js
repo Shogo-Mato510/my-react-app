@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import Navbar from './Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
 import Favorites from './pages/Favorites';
 import Admin from './pages/Admin';
+import Login from './pages/Login';
+import { getAccessToken } from './authStorage';
 import {
   addFavoriteQuote,
   getFavoriteQuotes,
@@ -16,7 +18,14 @@ import {
 
 const THEME_STORAGE_KEY = 'themeMode';
 
-function App() {
+function AppShell() {
+  const location = useLocation();
+  const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(getAccessToken()));
+
+  useEffect(() => {
+    setIsLoggedIn(Boolean(getAccessToken()));
+  }, [location.pathname]);
+
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [favorites, setFavorites] = useState([]);
 
@@ -54,30 +63,38 @@ function App() {
   const isFavorite = (quote) => isFavoriteQuote(quote, favorites);
 
   return (
-    <BrowserRouter>
-      <div className={isDarkMode ? 'theme-dark' : ''}>
-        <Navbar
-          isDarkMode={isDarkMode}
-          onToggleDarkMode={handleToggleDarkMode}
-          favoriteCount={favorites.length}
-        />
-        <div className="app-shell">
-          <Routes>
-            <Route
-              path="/"
-              element={<Home isFavorite={isFavorite} addFavorite={handleAddFavorite} />}
-            />
-            <Route path="/about" element={<About />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route
-              path="/favorites"
-              element={
-                <Favorites favorites={favorites} removeFavorite={handleRemoveFavorite} />
-              }
-            />
-          </Routes>
-        </div>
+    <div className={isDarkMode ? 'theme-dark' : ''}>
+      <Navbar
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={handleToggleDarkMode}
+        favoriteCount={favorites.length}
+        isLoggedIn={isLoggedIn}
+      />
+      <div className="app-shell">
+        <Routes>
+          <Route
+            path="/"
+            element={<Home isFavorite={isFavorite} addFavorite={handleAddFavorite} />}
+          />
+          <Route path="/about" element={<About />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/favorites"
+            element={
+              <Favorites favorites={favorites} removeFavorite={handleRemoveFavorite} />
+            }
+          />
+        </Routes>
       </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppShell />
     </BrowserRouter>
   );
 }
