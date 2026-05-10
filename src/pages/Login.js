@@ -21,13 +21,10 @@ function Login() {
     setError('');
     setSubmitting(true);
     try {
-      const body = new URLSearchParams();
-      body.set('username', username);
-      body.set('password', password);
       const response = await fetch(`${API_BASE}/auth/login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString(),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
       });
       if (!response.ok) {
         setError('ユーザー名またはパスワードが間違っています');
