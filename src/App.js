@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
 import Favorites from './pages/Favorites';
+import Admin from './pages/Admin';
 import {
   addFavoriteQuote,
   getFavoriteQuotes,
@@ -67,6 +68,7 @@ function App() {
               element={<Home isFavorite={isFavorite} addFavorite={handleAddFavorite} />}
             />
             <Route path="/about" element={<About />} />
+            <Route path="/admin" element={<Admin />} />
             <Route
               path="/favorites"
               element={

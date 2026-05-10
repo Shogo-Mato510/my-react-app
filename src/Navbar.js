@@ -20,6 +20,9 @@ function Navbar({ isDarkMode, onToggleDarkMode, favoriteCount }) {
             <Link className="navbar-link" to="/about">
               このアプリについて
             </Link>
+            <Link className="navbar-link" to="/admin">
+              管理
+            </Link>
           </nav>
           <button
             type="button"

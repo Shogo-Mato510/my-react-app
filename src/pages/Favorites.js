@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import '../App.css';
 import QuoteCard from '../QuoteCard';
+import { quoteKey } from '../favoritesStorage';
 
 function Favorites({ favorites, removeFavorite }) {
 
@@ -18,7 +19,7 @@ function Favorites({ favorites, removeFavorite }) {
           <div className="favorites-list">
             {favorites.map((quote) => (
               <QuoteCard
-                key={`${quote.content}-${quote.author}`}
+                key={quoteKey(quote)}
                 quote={quote}
                 actionLabel="削除"
                 onAction={removeFavorite}
