@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import { setAccessToken } from '../authStorage';
 
-const API_BASE = 'http://127.0.0.1:8000';
+const API_BASE = 'https://web-production-0a5cd.up.railway.app';
 
 function Login() {
   const navigate = useNavigate();

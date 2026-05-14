@@ -45,7 +45,7 @@ function Home({ isFavorite, addFavorite }) {
       setError(false);
 
       try {
-        const response = await fetch('http://127.0.0.1:8000/items');
+        const response = await fetch('https://web-production-0a5cd.up.railway.app/items');
         if (!response.ok) {
           throw new Error('Failed to fetch items');
         }
@@ -80,7 +80,7 @@ function Home({ isFavorite, addFavorite }) {
     let isMounted = true;
     const fetchCategories = async () => {
       try {
-        const res = await fetch('http://127.0.0.1:8000/quotes/categories');
+        const res = await fetch('https://web-production-0a5cd.up.railway.app/quotes/categories');
         if (!res.ok) throw new Error('Failed to fetch categories');
         const data = await res.json();
         if (!isMounted) return;
@@ -102,7 +102,7 @@ function Home({ isFavorite, addFavorite }) {
     setCategoryQuote(null);
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/quotes/random?category=${encodeURIComponent(selectedCategory)}`
+        `https://web-production-0a5cd.up.railway.app/quotes/random?category=${encodeURIComponent(selectedCategory)}`
       );
       if (!res.ok) throw new Error('Failed to fetch category quote');
       setCategoryQuote(await res.json());
@@ -127,10 +127,16 @@ function Home({ isFavorite, addFavorite }) {
           名言を取得した回数：<strong>{fetchCount}</strong>回
         </p>
 
-        {loading && <p className="quote-status">読み込み中...</p>}
+        {loading && (
+          <div className="quote-status">
+            <div className="spinner" role="status" aria-label="読み込み中" />
+          </div>
+        )}
 
         {!loading && error && (
-          <p className="quote-status">データの取得に失敗しました</p>
+          <p className="quote-error" role="alert">
+            ⚠ データの取得に失敗しました。再度お試しください。
+          </p>
         )}
 
         {!loading && !error && (
@@ -174,7 +180,9 @@ function Home({ isFavorite, addFavorite }) {
           </div>
 
           {categoryError && (
-            <p className="quote-status">カテゴリの名言取得に失敗しました</p>
+            <p className="quote-error" role="alert">
+              ⚠ カテゴリの名言取得に失敗しました。再度お試しください。
+            </p>
           )}
 
           {categoryQuote && !categoryError && (
